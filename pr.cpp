@@ -28,19 +28,46 @@ int countStringInBase(string str, string base) {
 
 int main(int argc, char* argv[]) {
 	fstream base_file, match_file;
-	string base, tmp;
+	string base = "", tmp;
 	vector<string> to_match;
-	base_file.open("base.txt", ios_base::in);
-	match_file.open("strings.txt", ios_base::in);
-	getline(base_file, base);
-	while(!match_file.eof()){
-		getline(match_file, tmp);
-		to_match.pb(tmp);
-	}
-	cout<<base.size()<<endl;
-	#pragma omp parallel for
-	for(int i = 0; i < to_match.size(); i++){
-		cout<<countStringInBase(to_match[i], base)<<'\n';
+
+	base_file.open(argv[1], ios_base::in);
+	match_file.open(argv[2], ios_base::in);
+
+	// if(*argv[3] != 1){
+	// 	cout<<"chuj"<<endl;
+	// } else {
+	// 	cout<<*argv[3]<<endl;
+	// }
+
+	if(*argv[3] == '0'){
+		while(!base_file.eof()){
+			getline(base_file, tmp);
+			base.append(tmp);
+		}
+		while(!match_file.eof()){
+			getline(match_file, tmp);
+			to_match.pb(tmp);
+		}
+		cout<<base.size()<<endl;
+		#pragma omp parallel for
+		for(int i = 0; i < to_match.size(); i++){
+			cout<<countStringInBase(to_match[i], base)<<'\n';
+		}
+	} else if(*argv[3] == '1') {
+		while(!match_file.eof()){
+			getline(match_file, tmp);
+			to_match.pb(tmp);
+		}
+		while(!base_file.eof()){
+			getline(base_file, base);
+			#pragma omp parallel for
+			for(int i = 0; i < to_match.size(); i++){
+				cout<<countStringInBase(to_match[i], base)<<'\n';
+			}
+		}
+	} else {
+		cout<<"Wrong parameters"<<'\n';
 	}
 	return 0;
 }
