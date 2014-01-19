@@ -26,7 +26,7 @@ int countStringInBase(string str, string base) {
 	return count;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
 	fstream base_file, match_file;
 	string base, tmp;
 	vector<string> to_match;
@@ -38,6 +38,7 @@ int main() {
 		to_match.pb(tmp);
 	}
 	cout<<base.size()<<endl;
+	#pragma omp parallel for
 	for(int i = 0; i < to_match.size(); i++){
 		cout<<countStringInBase(to_match[i], base)<<'\n';
 	}
