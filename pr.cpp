@@ -34,12 +34,6 @@ int main(int argc, char* argv[]) {
 	base_file.open(argv[1], ios_base::in);
 	match_file.open(argv[2], ios_base::in);
 
-	// if(*argv[3] != 1){
-	// 	cout<<"chuj"<<endl;
-	// } else {
-	// 	cout<<*argv[3]<<endl;
-	// }
-
 	if(*argv[3] == '0'){
 		while(!base_file.eof()){
 			getline(base_file, tmp);
