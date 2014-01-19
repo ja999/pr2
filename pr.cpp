@@ -39,7 +39,7 @@ int main() {
 	}
 	cout<<base.size()<<endl;
 	for(int i = 0; i < to_match.size(); i++){
-		cout<<countStringInBase(to_match[i], base)<<' ';
+		cout<<countStringInBase(to_match[i], base)<<'\n';
 	}
 	return 0;
 }
