@@ -7,7 +7,7 @@ using namespace std;
 
 int countStringInBase(string str, string base) {
 	int count=0;
-	for (int i=0; i<base.lenght();i++) {
+	for (int i=0; i<base.length();i++) {
 	}
 	return count;
 }
