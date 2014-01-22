@@ -9,6 +9,35 @@
 
 using namespace std;
 
+void test_function(const char* description, void (*func)()) {
+  if (first_time) {
+    initialize_matrices();
+    first_time = false;
+  } else {
+    initialize_C();
+  }
+  double start, elapsed;
+
+  fprintf(result_file, "\n%s\n", description);
+  printf("\n%s\n", description);
+  LARGE_INTEGER freq;
+  LARGE_INTEGER timer1, timer2;
+  QueryPerformanceFrequency(&freq);
+  QueryPerformanceCounter(&timer1);
+
+  start = (double) clock() / CLK_TCK;
+  func();
+  elapsed = (double) clock() / CLK_TCK - start;
+
+  QueryPerformanceCounter(&timer2);
+  double process_time = double(timer2.QuadPart - timer1.QuadPart) / (freq.QuadPart / 1000.0);
+
+  double resolution = 1.0 / CLK_TCK ;
+
+  fprintf(result_file, "%8.4f msec (clock: %8.4f, res: %6.4f)\n", process_time, elapsed, resolution);
+  printf("%8.4f (clock: %8.4f, res: %6.4f)\n", process_time, elapsed, resolution);
+}
+
 int countStringInBase(string str, string base) {
 	int count=0;
 	if (base.length() < str.length() || str.length() == 0)
